@@ -1,0 +1,265 @@
+html, body { height:100%; min-height:100%; @include font-size(16px); font-family: $defaultFont; background: $coAsh; color: $coWhite;}
+footer { z-index: 2; position: relative; }
+a { color: $coWhite;
+  &:hover {color: $coWhite; }
+}
+// this is area is for reserved class
+#main-container { height:100%; height: auto !important; min-height:100%; }
+.hide { position:relative; }
+.ease,a,input[type="submit"],button { @include transition(all 0.5s ease); }
+.ease2 { @include transition(all 0.3s ease); }
+.loader { position:relative; overflow:hidden; background:#fff url('../images/page_template/loading.gif') no-repeat center; }
+.auto { max-width:$maxWidth; margin-left: auto; margin-right: auto; }
+.img-auto { width: 100%; height: auto; }
+#main-wrapper { padding: 100px 0; }
+
+.zx1 { z-index: 1; }
+.zx2 { z-index: 2; }
+.zx3 { z-index: 3; }
+.zx4 { z-index: 4; }
+.zx5 { z-index: 5; }
+.zx6 { z-index: 6; }
+.overflow { overflow: hidden; }
+.pl-0 { padding-left: 0; }
+.pr-0 { padding-right: 0; }
+
+.preloader { position:fixed; width:100%; height:100%; overflow:hidden; }
+.explorer .preloader { background:#fff url('../images/page_template/loading.gif') no-repeat center; }
+.explorer .preloader .spinner { display:none; }
+// this is area is for reserved class
+
+// start of animation onload
+.container {
+  opacity: 0;
+  @include transition(opacity .5s ease-in);
+  @include transition-delay(.5s);
+}
+.show {
+  .container { opacity: 1; }
+}
+// animation for non-touch devices only
+.no-touch {
+  .show {
+    h1 {
+      opacity: 0;
+      @include transform(translateY(50px));
+      @include animation(fadeInUp .5s ease .7s forwards);
+    }
+    .deco-line {
+      @include transform(scaleX(0));
+      @include animation(stretch 1s ease .8s forwards);
+      &::before {
+        @include animation(light 4s ease-in-out 2s infinite);
+      }
+    }
+    .fadeIn {
+      opacity: 0;
+      @include transform(translateY(50px));
+      @include animation(fadeInUp .8s ease 1s forwards);
+    }
+  }
+}
+// end of animation onload
+
+// start of h1 section
+.deco-line {
+  width: 100%;
+  height: 1px;
+  @extend .ease2;;
+  background: $coWhite;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 10px;
+    height: 1px;
+    opacity: 0;
+    @include transform(translate(0%,-50%));
+    border-radius: 50%;
+    box-shadow: 0 0 7px 4px $coWhite;
+    background: $coWhite;
+  }
+}
+// end of h1 section
+
+// start of tabs
+.nav { border:none;
+  li { position: relative;
+    a {
+      span {
+        position: relative;
+        background: $coAsh;
+        z-index: 1;
+        display: block;
+        padding: 10px 20px;
+        overflow: hidden;
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -100%;
+          width: 100%;
+          height: 100%;
+          background: $coTeal;
+          z-index: -1;
+          @include transition(all ease .3s);
+        }
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 1px;
+        left: 50%;
+        z-index: 0;
+        width: 10px;
+        height: 10px;
+        @include transform(rotate(45deg) translate(-50%,50%));
+        @include transition(all ease .3s)
+        background: $coTeal;
+      }
+      &.active {
+        span { background: $coTeal; }
+        &::after { bottom: -5px; }
+      }
+      &:hover {
+        span {
+          &::before { bottom: 0; }
+        }
+        &::after { bottom: -5px; }
+      }
+    }
+  }
+}
+
+// start of accordion
+.accordion { border: 1px solid $coTeal;
+  .card {
+    position: relative;
+    border: none;
+    border-radius: 0;
+    background: $coAsh;
+    .card-header {
+      background: $coTeal;
+      border-color: $coTeal;
+      &:first-child { border-radius: 0;}
+      a {
+        position: relative;
+        display: block;
+        &:hover { color: $coWhite; }
+        &:not(.collapsed){
+          &::before { opacity: 0; }
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: -80%;
+            right: 20px;
+            z-index: 0;
+            width: 10px;
+            height: 10px;
+            @include transform(rotate(45deg) translate(-50%,50%));
+            @include transition(all ease .3s)
+            background: $coTeal;
+            border-right: none;
+            border-top: none;
+          }
+        }
+        &::before {
+          content: "";
+          position: absolute;
+          bottom: 53%;
+          right: 27px;
+          z-index: 2;
+          width: 10px;
+          height: 150%;
+          opacity: 1;
+          @include transform(translate(-50%,50%));
+          @include transition(all ease .3s)
+          background: $coTeal;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 30%;
+          right: 20px;
+          z-index: 0;
+          width: 10px;
+          height: 10px;
+          @include transform(rotate(45deg) translate(-50%,50%));
+          @include transition(all ease .3s)
+          background: $coWhite;
+        }
+      }
+    }
+  }
+}
+
+// animations
+@keyframes light {
+  0% {
+    @include transform(scale(0));
+    left: 0;
+    opacity: 0
+  }
+  50% {
+    @include transform(scale(1));
+    opacity: 1;
+  }
+  100% {
+    @include transform(scale(0));
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    @include transform(translateY(100%));
+  }
+  100% {
+    opacity: 1;
+    @include transform(translateY(0));
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    @include transform(translateY(50px));
+    opacity: 0;
+  }
+  100% {
+    @include transform(translateY(0));
+    opacity: 1;
+  }
+}
+
+@keyframes stretch {
+  0% {
+    @include transform(scaleX(0));
+  }
+  100% {
+    @include transform(scaleX(1));
+  }
+}
+
+// media queries
+@media (min-width: 576px) {
+  .accordion {
+    .card {
+      .collapse { display: block;}
+      .card-header { display: none; }
+    }
+  }
+}
+@include breakpoint(sm){
+  h1 { @include font-size(30px);}
+  .nav { display: none; }
+  .card {
+    &.tab-pane {
+      display: block !important;
+      opacity: 1 !important;
+    }
+  }
+};
